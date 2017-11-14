@@ -31,7 +31,10 @@ def get_csv_page(url: String) : List[String] = {
 //    line in the csv-list. The filename file_population is one possible
 //    argument.
 
-//def get_csv_file(file: String) : List[String] = ...
+def get_csv_file(file: String) : List[String] = {
+
+    Source.fromFile(file).getLines.toList
+}
 
 
 

@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\DimXPS\PEP_Assignments\PEP_Scala\PEP_CW_06\assignment20176-dimitrisppt\alcohol.scala:21:48: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0mdef get_csv_page(url: String) : List[String] = ...[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

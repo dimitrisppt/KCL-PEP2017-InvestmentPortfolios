@@ -10,7 +10,7 @@ object CW6a {
 	//    performs the recursion. The function should expect
 	//    arguments in the range of 1 to 1 Million.
 
-	def collatz(n: Long): Long = rec(n, 0)
+
 
 	def rec(n: Long, i: Long): Long = {
 		if (n == 1) {
@@ -21,6 +21,8 @@ object CW6a {
 		  rec(3*n + 1, i + 1)
 		}
 	}
+
+	def collatz(n: Long): Long = rec(n, 0)
 
 
 	//(2)  Complete the collatz-bound function below. It should
