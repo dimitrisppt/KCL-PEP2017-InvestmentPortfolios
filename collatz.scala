@@ -36,7 +36,7 @@ object CW6a {
 
 	  val list = for (i <- (1L to bnd)) yield collatz(i)
 	  val max = list.max
-	  (list.indexOf(max)+1, max)
+	  (max, list.indexOf(max)+1)
 
 	}
 
