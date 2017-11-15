@@ -73,7 +73,18 @@ def process_pops(lines: List[String]) : Map[String, Long] = {
 //    Sort the resulting list according to the country with the highest alcohol
 //    consumption to the country with the lowest alcohol consumption.
 
-//def sorted_country_consumption() : List[(String, Long)] = ...
+def sorted_country_consumption() : List[(String, Long)] = {
+
+  val list = for {
+    nameA <- process_alcs(get_csv_page(url_alcohol))
+    nameB <- process_pops(get_csv_file(file_population))
+    total = nameA._2 * nameB._2
+
+    if (nameA._1 == nameB._1) } yield (nameA._1, total.toLong)
+
+  list.sortBy(_._2).reverse
+  
+}
 
 
 //   Calculate the world consumption of pure alcohol of all countries, which
