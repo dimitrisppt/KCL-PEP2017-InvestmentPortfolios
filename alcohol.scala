@@ -49,7 +49,7 @@ def process_alcs(lines: List[String]) : List[(String, Double)] = {
   val list = for {
       line <- lines
       lst = line.split(",").toList
-      } yield { (lst.take(1)(0), lst.drop(4)(0).toDouble) }
+  } yield { (lst(0), lst(4).toDouble) }
   list
 }
 
