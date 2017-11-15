@@ -44,9 +44,21 @@ def get_csv_file(file: String) : List[String] = {
 //    generate a Map of Strings (country names) to Long numbers
 //    (population sizes).
 
-//def process_alcs(lines: List[String]) : List[(String, Double)] = ...
+def process_alcs(lines: List[String]) : List[(String, Double)] = {
+    val list = for {
+    line <- lines
+    lst = line.split(",").toList
+    } yield { (lst.take(1)(0), lst.drop(4)(0).toDouble) }
+    list
+}
 
-//def process_pops(lines: List[String]) : Map[String, Long] = ...
+def process_pops(lines: List[String]) : Map[String, Long] = {
+    val list = for {
+    line <- lines.drop(1)
+    lst = line.split(",").toList
+    } yield { (lst.take(1)(0), lst.drop(4)(0).toLong) }
+    list.toMap
+}
 
 
 
