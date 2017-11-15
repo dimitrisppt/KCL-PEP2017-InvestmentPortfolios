@@ -58,7 +58,7 @@ def process_pops(lines: List[String]) : Map[String, Long] = {
   val list = for {
     line <- lines
     lst = line.split(",").toList
-  } yield { (lst(0), lst(4).toLong) }
+    } yield { (lst(0), lst(1).toLong) }
   list.toMap
 }
 
