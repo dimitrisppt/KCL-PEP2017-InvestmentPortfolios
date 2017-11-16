@@ -83,7 +83,7 @@ def sorted_country_consumption() : List[(String, Long)] = {
     if (nameA._1 == nameB._1) } yield (nameA._1, total.toLong)
 
   list.sortBy(_._2).reverse
-  
+
 }
 
 
@@ -93,6 +93,14 @@ def sorted_country_consumption() : List[(String, Long)] = {
 //   from above; and finally the double should be the percentage of the
 //   first n countries drinking from the the world consumption of alcohol.
 
-//def percentage(n: Int) : (Long, Long, Double) = ...
+def percentage(n: Int) : (Long, Long, Double) = {
+
+    val result = for (
+        n <- sorted_country_consumption()
+    ) yield (n.toString().split(","))(1).substring(0, n.toString().split(",")(1).length-1).toLong
+    val triple = (result.sum, result.take(n).sum, (result.take(n).sum.toDouble * 100) / (result.sum.toDouble))
+    triple
+
+}
 
 }
