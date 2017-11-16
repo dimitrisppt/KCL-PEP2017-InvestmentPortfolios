@@ -86,7 +86,6 @@ def sorted_country_consumption() : List[(String, Long)] = {
   }
 
   list.toList.filter(_ != ("a", 2L)).sortBy(_._2).reverse
-
 }
 
 
