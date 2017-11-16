@@ -98,7 +98,7 @@ def percentage(n: Int) : (Long, Long, Double) = {
     val result = for (
         n <- sorted_country_consumption()
     ) yield (n.toString().split(","))(1).substring(0, n.toString().split(",")(1).length-1).toLong
-    val triple = (result.sum, result.take(n).sum, (result.take(n).sum.toDouble * 100) / (result.sum.toDouble))
+    val triple = ((result.sum).toLong, (result.take(n).sum).toLong, (result.take(n).sum.toDouble * 100) / (result.sum.toDouble))
     triple
 
 }
