@@ -38,6 +38,7 @@ def get_csv_file(file: String) : List[String] = {
 
 
 
+
 //(2) Complete the functions that process the csv-lists. For
 //    process_alcs extract the country name (as String) and the
 //    pure alcohol consumption (as Double). For process_pops
@@ -74,15 +75,17 @@ def process_pops(lines: List[String]) : Map[String, Long] = {
 //    consumption to the country with the lowest alcohol consumption.
 
 def sorted_country_consumption() : List[(String, Long)] = {
+  val nameA = process_alcs(get_csv_page(url_alcohol).drop(1))
+  val nameB = process_pops(get_csv_file(file_population).drop(1))
+  val list = for(i <- nameA ; j <- nameB) yield {
+    if (i._1 == j._1) {
+      val total = i._2.toDouble * j._2.toDouble
+      (i._1, total.toLong) }
+    else
+      ("a", 2L)
+  }
 
-  val list = for {
-    nameA <- process_alcs(get_csv_page(url_alcohol))
-    nameB <- process_pops(get_csv_file(file_population))
-    total = nameA._2.toLong * nameB._2.toLong
-
-    if (nameA._1 == nameB._1) } yield (nameA._1, total.toLong)
-
-  list.sortBy(_._2).reverse
+  list.toList.filter(_ != ("a", 2L)).sortBy(_._2).reverse
 
 }
 
