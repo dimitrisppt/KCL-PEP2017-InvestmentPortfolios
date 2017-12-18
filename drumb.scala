@@ -33,10 +33,7 @@ def get_january_data(symbol: String, year: Int) : List[String] = {
 
 
 def get_first_price(symbol: String, year: Int): Option[Double] = {
-   Try{
-     val data = get_january_data(symbol,year)
-     (data.head.split(",")(1).toDouble)
-   }
+   Try(get_january_data(symbol,year).head.split(",")(1).toDouble)
    .toOption
 }
 
@@ -59,9 +56,20 @@ def get_prices(portfolio: List[String], years: Range) : List[List[Option[Double]
 //     all change factors for all prices (from a portfolio). The input to this
 //     function are the nested lists created by get_prices above.
 
-//def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = ...
+def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = {
+  	if (!(price_old.isDefined && price_new.isDefined)) {
+		  None
+  	} else {
+  	  Option((price_new.get-price_old.get) / price_old.get)
+  	}
+}
 
-//def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = ...
+
+def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = {
+   for ((oldList, newList) <- data zip data.drop(1)) yield 
+       for (price_old <- oldList; price_new <- newList;
+           if(newList.indexOf(price_new) == oldList.indexOf(price_old))) yield get_delta(price_old, price_new)
+}
 
 
 
