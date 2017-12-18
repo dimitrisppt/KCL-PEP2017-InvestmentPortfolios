@@ -6,10 +6,9 @@ object CW6c {
 
 //two test portfolios
 
-val blchip_portfolio = List("GOOG", "AAPL", "MSFT", "IBM", "FB", "YHOO", "AMZN", "BIDU")
-val rstate_portfolio = List("PLD", "PSA", "AMT", "AIV", "AVB", "BXP", "CBG", "CCI",
-                            "DLR", "EQIX", "EQR", "ESS", "EXR", "FRT", "GGP", "HCP")
+val blchip_portfolio = List("GOOG", "AAPL", "MSFT", "IBM", "FB", "AMZN", "BIDU", "FOOBAR")
 
+val rstate_portfolio = List("PLD", "PSA", "AMT", "AIV", "AVB", "BXP", "CCI", "DLR", "EQIX", "EQR", "ESS", "EXR", "FRT", "GGP", "HCP") 
 
 // (1.a) The function below takes a stock symbol and a year as arguments.
 //       It should read the corresponding CSV-file and read the January
