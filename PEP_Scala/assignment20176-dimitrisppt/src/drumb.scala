@@ -34,11 +34,11 @@ def get_january_data(symbol: String, year: Int) : List[String] = {
 
 
 def get_first_price(symbol: String, year: Int): Option[Double] = {
-	Try{
-        val lst = get_january_data(symbol,year)
-        (lst.head.split(",")(1).toDouble)
-        .toOption
-    }
+   Try{
+     val data = get_january_data(symbol,year)
+     (data.head.split(",")(1).toDouble)
+   }
+   .toOption
 }
 
 
