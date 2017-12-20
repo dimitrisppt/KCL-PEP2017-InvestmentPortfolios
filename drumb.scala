@@ -81,29 +81,29 @@ def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] =
 //     as arguments.
 
 
-def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-  val result = (for(dta <- data(year); 
-                    if (None!=dta)) yield 
-                          (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
-	result
-}
+// def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
+//   val result = (for(dta <- data(year); 
+//                     if (None!=dta)) yield 
+//                           (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
+// 	result
+// }
 
-def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-  if (data.length != 0) {
-    val currentBln = yearly_yield(data,balance,year)
-    compound_yield(data.drop(1),currentBln,year + 1)
+// def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
+//   if (data.length != 0) {
+//     val currentBln = yearly_yield(data,balance,year)
+//     compound_yield(data.drop(1),currentBln,year + 1)
     
-  } else {
-    val result = balance
-    result
-  }
-}
+//   } else {
+//     val result = balance
+//     result
+//   }
+// }
 
-def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = {
-  	val deltas = get_deltas(get_prices(portfolio, years))
-  	val year = years.end - years.start
-	  compound_yield(deltas, start_balance, year)
-}
+// def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = {
+//   	val deltas = get_deltas(get_prices(portfolio, years))
+//   	val year = years.end - years.start
+// 	  compound_yield(deltas, start_balance, year)
+// }
 
 
 
