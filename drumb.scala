@@ -82,9 +82,10 @@ def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] =
 
 
 def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-   val a = data.head.flatten
-   val currentBln = a.map(_*(balance.toDouble/ a.length)).sum.toLong + balance
-   currentBln
+  val result = (for(dta <- data(year); 
+                    if (None!=dta)) yield 
+                          (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
+	result
 }
 
 def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
