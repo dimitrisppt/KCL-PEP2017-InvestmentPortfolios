@@ -6,7 +6,7 @@ object CW6c {
 
 //two test portfolios
 
-val blchip_portfolio = List("GOOG", "AAPL", "MSFT", "IBM", "FB", "AMZN", "BIDU", "FOOBAR")
+val bchips_portfolio = List("GOOG", "AAPL", "MSFT", "IBM", "FB", "AMZN", "BIDU", "FOOBAR")
 
 val rstate_portfolio = List("PLD", "PSA", "AMT", "AIV", "AVB", "BXP", "CCI", "DLR", "EQIX", "EQR", "ESS", "EXR", "FRT", "GGP", "HCP") 
 
@@ -61,7 +61,7 @@ def get_prices(portfolio: List[String], years: Range) : List[List[Option[Double]
 
 def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = {
   	if (!(price_old.isDefined && price_new.isDefined)) {
-		  None
+	  None
   	} else {
   	  Option((price_new.get-price_old.get) / price_old.get)
   	}
@@ -83,9 +83,9 @@ def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] =
 
 def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
   val result = (for(dta <- data(year); 
-                    if (None!=dta)) yield 
-                          (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
-	result
+  	if (None!=dta)) yield 
+  		(dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
+  result
 }
 
 def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
@@ -98,7 +98,7 @@ def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) :
 
 def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = {
   val deltas = get_deltas(get_prices(portfolio, years))
-	compound_yield(deltas, start_balance, years.end - years.start)
+  compound_yield(deltas, start_balance, years.end - years.start)
 }
 
 
