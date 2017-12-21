@@ -3,6 +3,7 @@
 
 object CW6c {
 
+
 //two test portfolios
 
 val blchip_portfolio = List("GOOG", "AAPL", "MSFT", "IBM", "FB", "AMZN", "BIDU", "FOOBAR")
@@ -32,7 +33,10 @@ def get_january_data(symbol: String, year: Int) : List[String] = {
 
 
 def get_first_price(symbol: String, year: Int): Option[Double] = {
-   Try(get_january_data(symbol,year).head.split(",")(1).toDouble)
+   Try{
+     val data = get_january_data(symbol,year)
+     (data.head.split(",")(1).toDouble)
+   }
    .toOption
 }
 
@@ -48,7 +52,6 @@ def get_prices(portfolio: List[String], years: Range) : List[List[Option[Double]
     listOfYears.map(singleYear => portfolio.map(get_first_price(_, singleYear)))
 }
 
-println(get_prices(List("GOOG", "AAPL"), 2010 to 2012))
 
 
 // (2) The first function below calculates the change factor (delta) between
@@ -56,22 +59,9 @@ println(get_prices(List("GOOG", "AAPL"), 2010 to 2012))
 //     all change factors for all prices (from a portfolio). The input to this
 //     function are the nested lists created by get_prices above.
 
-def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = {
-  	if (!(price_old.isDefined && price_new.isDefined)) {
-		  None
-  	} else {
-  	  Option((price_new.get-price_old.get) / price_old.get)
-  	}
-}
+//def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = ...
 
-
-def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = {
-   for ((oldList, newList) <- data zip data.drop(1)) yield 
-       for (price_old <- oldList; price_new <- newList;
-           if(newList.indexOf(price_new) == oldList.indexOf(price_old))) yield get_delta(price_old, price_new)
-}
-
-println (get_deltas(get_prices(List("GOOG", "AAPL"), 2010 to 2012)))
+//def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = ...
 
 
 
@@ -83,32 +73,17 @@ println (get_deltas(get_prices(List("GOOG", "AAPL"), 2010 to 2012)))
 //     as arguments.
 
 
-//def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-//  val result = (for(dta <- data(year); 
-//                    if (None!=dta)) yield 
-//                          (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
-//	result
-//}
-//
-//def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-//  if (year != 0) {
-//    yearly_yield(data, compound_yield(data, balance, year - 1), year)
-//  } else {
-//    yearly_yield(data, balance, year)
-//  }
-//}
-//
-//def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = {
-//  val deltas = get_deltas(get_prices(portfolio, years))
-//	compound_yield(deltas, start_balance, years.end - years.start)
-//}
+//def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = ...
+
+//def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = ...
+
+//def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = ...
 
 
 
 //test cases for the two portfolios given above
-//
+
 //investment(rstate_portfolio, 1978 to 2017, 100)
 //investment(blchip_portfolio, 1978 to 2017, 100)
 
 }
-
