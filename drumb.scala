@@ -81,18 +81,17 @@ def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] =
 //     calculations by taking a portfolio, a range of years and a start balance
 //     as arguments.
 
-def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-  val result = (for(dta <- data(year); 
-  	if (None!=dta)) yield 
-  		(dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
-  result
+def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = { 
+  val result = for(yearlyData <- data(year); if (None != yearlyData)) yield 
+                                                 (yearlyData.get * (balance.toDouble / (data(year).flatten.length.toDouble)))
+  (result.sum.toLong + balance)
 }
 
 def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
-  if (year != 0) {
-    yearly_yield(data, compound_yield(data, balance, year - 1), year)
-  } else {
+  if (year == 0) {
     yearly_yield(data, balance, year)
+  } else {
+    yearly_yield(data, compound_yield(data, balance, year - 1), year)
   }
 }
 
