@@ -19,10 +19,10 @@ import io.Source
 import scala.util._
 
 def get_january_data(symbol: String, year: Int) : List[String] = {
-    val url = "http://ichart.yahoo.com/table.csv?s=" + symbol
-    val lines = Source.fromURL(url).mkString.split("\n").toList
-    for(singleLine <- lines.drop(1)
-        if (singleLine.startsWith(year.toString))) yield singleLine
+
+  val csv = symbol + ".csv"
+  val csvLines = Source.fromFile(csv).getLines.toList
+  for(line <- csvLines.drop(1) if(line.startsWith(year.toString))) yield line
 }
 
 
@@ -81,16 +81,30 @@ def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] =
 //     as arguments.
 
 
-//def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = ...
+def yearly_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
+  val result = (for(dta <- data(year); 
+                    if (None!=dta)) yield 
+                          (dta.get*(balance.toDouble/(data(year).flatten.length.toDouble)))).sum.toLong + balance
+	result
+}
 
-//def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = ...
+def compound_yield(data: List[List[Option[Double]]], balance: Long, year: Int) : Long = {
+  if (year != 0) {
+    yearly_yield(data, compound_yield(data, balance, year - 1), year)
+  } else {
+    yearly_yield(data, balance, year)
+  }
+}
 
-//def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = ...
+def investment(portfolio: List[String], years: Range, start_balance: Long) : Long = {
+  val deltas = get_deltas(get_prices(portfolio, years))
+	compound_yield(deltas, start_balance, years.end - years.start)
+}
 
 
 
 //test cases for the two portfolios given above
-
+//
 //investment(rstate_portfolio, 1978 to 2017, 100)
 //investment(blchip_portfolio, 1978 to 2017, 100)
 
