@@ -19,10 +19,10 @@ import io.Source
 import scala.util._
 
 def get_january_data(symbol: String, year: Int) : List[String] = {
-    val url = "http://ichart.yahoo.com/table.csv?s=" + symbol
-    val lines = Source.fromURL(url).mkString.split("\n").toList
-    for(singleLine <- lines.drop(1)
-        if (singleLine.startsWith(year.toString))) yield singleLine
+  val csv = symbol + ".csv"
+  val csvLines = Source.fromFile(csv).getLines.toList
+  for(line <- csvLines.drop(1) 
+      if(line.startsWith(year.toString))) yield line
 }
 
 
