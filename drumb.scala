@@ -59,12 +59,21 @@ def get_prices(portfolio: List[String], years: Range) : List[List[Option[Double]
 //     all change factors for all prices (from a portfolio). The input to this
 //     function are the nested lists created by get_prices above.
 
-//def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = ...
+def get_delta(price_old: Option[Double], price_new: Option[Double]) : Option[Double] = {
+  	if (!(price_old.isDefined && price_new.isDefined)) {
+		  None
+  	} else {
+  	  Option((price_new.get-price_old.get) / price_old.get)
+  	}
+}
 
-//def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = ...
 
-
-
+def get_deltas(data: List[List[Option[Double]]]) :  List[List[Option[Double]]] = {
+   for ((oldList, newList) <- data zip data.drop(1)) yield 
+       for (price_old <- oldList; price_new <- newList;
+           if(newList.indexOf(price_new) == oldList.indexOf(price_old))) yield get_delta(price_old, price_new)
+}
+  
 // (3) Write a function that given change factors, a starting balance and a year
 //     calculates the yearly yield, i.e. new balance, according to our dump investment
 //     strategy. Another function calculates given the same data calculates the
